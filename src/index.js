@@ -2,7 +2,7 @@ const discord = require("discord.js");
 const Status = require("./Status");
 const cron = require('cron');
 
-const TOKEN = "ODEyMDE0ODM2NDYzOTYwMTE0.YC6lvw.LVifNPRXTRHxo22EPFmeYIMGVTo";
+const TOKEN = process.env.TOKEN;
 
 
 const status = new Status.Status();
