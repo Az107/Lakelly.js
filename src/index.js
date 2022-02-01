@@ -1,11 +1,21 @@
 const discord = require("discord.js");
-const Status = require("./Status");
 const cron = require('cron');
 
 const TOKEN = process.env.TOKEN;
 
 
-const status = new Status.Status();
+const cmds = ["mpies"," id"," test"];
+const prefix = "!kelly";
+
+
+function clean(id) {
+	let channel = client.channels.cache.get(id);
+    channel.messages.fetch({ limit: 100 }).then(messages => {
+      //Iterate through the messages here with the variable "messages".
+      messages.forEach(message => message.delete())
+		}
+  );
+}
 
 const client = new discord.Client();
 const channels = [
@@ -19,27 +29,39 @@ client.on('ready', () => {
   
 });
 
+client.on('message', (msg) => {
+    console.log("new message");
+		if (msg.content.startsWith(prefix)) console.log("with prefix");
+		let command = msg.content.replace(prefix,"");
+		let i = cmds.indexOf(command);
+		switch (i) {
+			case 0:
+				clean(msg.channelId);
+				break;
+			case 1:
+				msg.reply(msg.channelId);
+				break;
+			case 2:
+				msg.reply("All right");
+				break;
+			default:
+				msg.reply("Yamete kudasai!");
+
+		}
+  
+});
+
 let scheduledMessage = new cron.CronJob('00 00 01 * * *', () => {
   // This runs every day at 1am
 
   channels.forEach(id => {
-    let channel = client.channels.cache.get(id);
-    channel.messages.fetch({ limit: 100 }).then(messages => {
-      //Iterate through the messages here with the variable "messages".
-      messages.forEach(message => message.delete())
-    });
-
+    clean(id);
   })
-});
-
-let callstatus = new cron.CronJob('00 20 * * * *', () => {
-  // This runs every hour at '20
-  http.get('url');
 });
 
 // When you want to start it, use:
 scheduledMessage.start()
-callstatus.start();
+
 // You could also make a command to pause and resume the job
 
 client.login(TOKEN);
