@@ -4,14 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node ./build/index.js"
   },
   "author": "Az107",
   "license": "MIT",
   "dependencies": {
     "cron": "^1.8.2",
     "discord.js": "^12.5.1",
-    "node": "^12.20.1"
+    "dotenv": "^15.0.0",
+    "node": "^12.20.1",
+    "os-service": "^2.2.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/node": "^17.0.14",
+    "@types/os-service": "^2.2.1"
+  }
 }
